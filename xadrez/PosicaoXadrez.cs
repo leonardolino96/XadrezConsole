@@ -11,6 +11,7 @@ namespace xadrez {
             this.linha = linha;
         }
 
+        //Converte a coordenada informada pelo jogador para indice/coluna da matriz do Tabuleiro
         public Posicao toPosicao() {
             return new Posicao(8 - linha, coluna - 'a');
         }

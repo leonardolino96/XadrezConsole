@@ -4,6 +4,8 @@ using xadrez;
 
 namespace XadrezConsole {
     class Tela {
+
+        //Imprime o Tabuleiro sem mostrar os movimentos possíveis
         public static void imprimirTabuleiro(Tabuleiro tab) {
 
             for (int i = 0; i < tab.linhas; i++) {
@@ -16,6 +18,7 @@ namespace XadrezConsole {
             Console.WriteLine("  a b c d e f g h");
         }
 
+        //Imprime o Tabuleiro mostrando os movimentos possíveis
         public static void imprimirTabuleiro(Tabuleiro tab, bool[,] posicoePossiveis) {
 
             ConsoleColor fundoOriginal = Console.BackgroundColor;
@@ -38,6 +41,7 @@ namespace XadrezConsole {
             Console.BackgroundColor = fundoOriginal;
         }
 
+        //Imprime a peça ou um '-' se a posição estiver vazia
         public static void imprimirPeca(Peca peca) {
             if (peca == null) {
                 Console.Write("- ");
@@ -54,6 +58,7 @@ namespace XadrezConsole {
             }
         }
 
+        //Lê a coordenada da jogada
         public static PosicaoXadrez lerPosicaoXadrez() {
             string s = Console.ReadLine();
             char coluna = s[0];

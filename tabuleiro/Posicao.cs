@@ -12,6 +12,7 @@ namespace tabuleiro {
             this.coluna = coluna;
         }
 
+        //Altera a posição usando uma linha de comando
         public void definirValores(int linha, int coluna) {
             this.linha = linha;
             this.coluna = coluna;

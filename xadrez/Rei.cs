@@ -5,52 +5,54 @@ namespace xadrez {
         public Rei(Tabuleiro tab, Cor cor) : base(tab, cor) {
         }
 
+        //Verifica se a posição no Tabuleiro está vazia ou possui uma peça de OUTRA cor
         private bool podeMover(Posicao pos) {
             Peca p = tab.peca(pos);
             return p == null || p.cor != cor;
         }
 
+        //Mapeia todas as posições possíveis para a peça
         public override bool[,] movimentosPossiveis() {
             bool[,] mat = new bool[tab.linhas, tab.colunas];
 
             Posicao pos = new Posicao(0, 0);
 
-            // acima
+            //Norte
             pos.definirValores(posicao.linha - 1, posicao.coluna);
             if (tab.posicaoValida(pos) && podeMover(pos)) {
                 mat[pos.linha, pos.coluna] = true;
             }
-            // ne
+            //Nordeste
             pos.definirValores(posicao.linha - 1, posicao.coluna + 1);
             if (tab.posicaoValida(pos) && podeMover(pos)) {
                 mat[pos.linha, pos.coluna] = true;
             }
-            // direita
+            //Leste
             pos.definirValores(posicao.linha, posicao.coluna + 1);
             if (tab.posicaoValida(pos) && podeMover(pos)) {
                 mat[pos.linha, pos.coluna] = true;
             }
-            // se
+            //Sudeste
             pos.definirValores(posicao.linha + 1, posicao.coluna + 1);
             if (tab.posicaoValida(pos) && podeMover(pos)) {
                 mat[pos.linha, pos.coluna] = true;
             }
-            // abaixo
+            //Sul
             pos.definirValores(posicao.linha + 1, posicao.coluna);
             if (tab.posicaoValida(pos) && podeMover(pos)) {
                 mat[pos.linha, pos.coluna] = true;
             }
-            // so
+            //Sudoeste
             pos.definirValores(posicao.linha + 1, posicao.coluna - 1);
             if (tab.posicaoValida(pos) && podeMover(pos)) {
                 mat[pos.linha, pos.coluna] = true;
             }
-            // esquerda
+            //Oeste
             pos.definirValores(posicao.linha, posicao.coluna - 1);
             if (tab.posicaoValida(pos) && podeMover(pos)) {
                 mat[pos.linha, pos.coluna] = true;
             }
-            // no
+            //Noroeste
             pos.definirValores(posicao.linha - 1, posicao.coluna - 1);
             if (tab.posicaoValida(pos) && podeMover(pos)) {
                 mat[pos.linha, pos.coluna] = true;
