@@ -11,19 +11,22 @@ namespace xadrez {
         public bool terminada { get; private set; }
         private HashSet<Peca> pecas;
         private HashSet<Peca> pecasCapturadas;
+        public bool xeque { get; private set; }
+
 
         public PartidaDeXadrez() {
             tab = new Tabuleiro(8, 8);
             turno = 1;
             jogadorAtual = Cor.Branca;
             terminada = false;
+            xeque = false;
             pecas = new HashSet<Peca>();
             pecasCapturadas = new HashSet<Peca>();
             colocarPecas();
         }
 
         //Movimenta a peça e captura a adversária quando necessário
-        public void executaMovimento(Posicao origem, Posicao destino) {
+        public Peca executaMovimento(Posicao origem, Posicao destino) {
             Peca p = tab.retirarPeca(origem);
             p.incrementarQteMovimentos();
             Peca pecaCapturada = tab.retirarPeca(destino);
@@ -31,13 +34,34 @@ namespace xadrez {
             if (pecaCapturada != null) {
                 pecasCapturadas.Add(pecaCapturada);
             }
+            return pecaCapturada;
         }
 
         //Executa uma jogada movendo a peça e alterando o turno dos jogadores
         public void realizaJogada(Posicao origem, Posicao destino) {
-            executaMovimento(origem, destino);
+            Peca capturada = executaMovimento(origem, destino);
+            if (estaEmXeque(jogadorAtual)) {
+                desfazMovimento(origem, destino, capturada);
+                throw new TabuleiroException("Você não pode se colocar em Xeque");
+            }
+            if (estaEmXeque(adversaria(jogadorAtual))) {
+                xeque = true;
+            } else {
+                xeque = false;
+            }
+
             turno++;
             mudaJogador();
+        }
+
+        public void desfazMovimento(Posicao origem, Posicao destino, Peca capturada) {
+            Peca p = tab.retirarPeca(destino);
+            p.decrementarQteMovimentos();
+            if (capturada != null) {
+                tab.colocarPeca(capturada, destino);
+                pecasCapturadas.Remove(p);
+            }
+            tab.colocarPeca(p, origem);
         }
 
         //Muda o turno dos jogadores
@@ -70,6 +94,37 @@ namespace xadrez {
             }
             aux.ExceptWith(capturadas(cor));
             return aux;
+        }
+
+        //Retorna a cor adversária
+        private Cor adversaria(Cor cor) {
+            if (cor == Cor.Branca) {
+                return Cor.Preta;
+            } else {
+                return Cor.Branca;
+            }
+        }
+
+        //Retorna o rei adaversário
+        private Peca rei(Cor cor) {
+            foreach (Peca p in emJogo(cor)) {
+                if (p is Rei) {
+                    return p;
+                }
+            }
+            return null;
+        }
+
+        //Verifica se alguma peça pode capturar o rei
+        public bool estaEmXeque(Cor cor) {
+            Peca r = rei(cor);
+            foreach (Peca p in emJogo(adversaria(cor))) {
+                bool[,] mat = p.movimentosPossiveis();
+                if (mat[r.posicao.linha, r.posicao.coluna]) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         //Verifica se a posição de origem da peça é válida
