@@ -1,9 +1,40 @@
 ﻿using System;
+using System.Collections.Generic;
 using tabuleiro;
 using xadrez;
 
 namespace XadrezConsole {
     class Tela {
+
+        public static void imprimirPartida(PartidaDeXadrez partida) {
+            imprimirTabuleiro(partida.tab);
+            Console.WriteLine();
+            imprimirCapturadas(partida);
+            Console.WriteLine("Turno: " + partida.turno);
+            Console.WriteLine("Aguardando jogada: " + partida.jogadorAtual);
+        }
+
+        public static void imprimirCapturadas(PartidaDeXadrez partida) {
+            Console.WriteLine("Peças capturadas:");
+            Console.Write("Brancas: ");
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Green;
+            imprimirConjunto(partida.capturadas(Cor.Branca));
+            Console.ForegroundColor = aux;
+            Console.Write("Pretas: ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            imprimirConjunto(partida.capturadas(Cor.Preta));
+            Console.ForegroundColor = aux;
+            Console.WriteLine();
+        }
+
+        public static void imprimirConjunto(HashSet<Peca> conjunto) {
+            Console.Write("[");
+            foreach (Peca p in conjunto) {
+                Console.Write(p + ", ");
+            }
+            Console.WriteLine("]");
+        }
 
         //Imprime o Tabuleiro sem mostrar os movimentos possíveis
         public static void imprimirTabuleiro(Tabuleiro tab) {
@@ -47,10 +78,13 @@ namespace XadrezConsole {
                 Console.Write("- ");
             } else {
                 if (peca.cor == Cor.Branca) {
+                    ConsoleColor aux = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write(peca);
+                    Console.ForegroundColor = aux;
                 } else {
                     ConsoleColor aux = Console.ForegroundColor;
-                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write(peca);
                     Console.ForegroundColor = aux;
                 }
