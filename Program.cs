@@ -9,7 +9,7 @@ namespace XadrezConsole {
                 PartidaDeXadrez partida = new PartidaDeXadrez();
 
                 Tabuleiro tab = new Tabuleiro(8, 8);
-
+                
                 while (!partida.terminada) {
                     try {
                         Console.Clear();

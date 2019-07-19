@@ -85,7 +85,7 @@ namespace xadrez {
 
         //Verifica se a posição de destino da peça é válida
         public void validaDestino(Posicao origem, Posicao destino) {
-            if (!tab.peca(origem).podeMoverPara(destino)) {
+            if (!tab.peca(origem).movimentoPossivel(destino)) {
                 throw new TabuleiroException("Posição de destino inválida");
             }
         }
