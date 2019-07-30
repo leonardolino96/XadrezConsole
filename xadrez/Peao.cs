@@ -32,12 +32,12 @@ namespace xadrez {
 
             if (cor == Cor.Branca) {
                 pos.definirValores(posicao.linha - 1, posicao.coluna);
-                if (tab.posicaoValida(pos) && podeMover(pos)) {
+                if (tab.posicaoValida(pos) && podeMover(pos) && !existeInimigo(pos)) {
                     mat[pos.linha, pos.coluna] = true;
                 }
                 
                 pos.definirValores(posicao.linha - 2, posicao.coluna);
-                if (tab.posicaoValida(pos) && podeMover(pos) && qteMovimentos == 0) {
+                if (tab.posicaoValida(pos) && podeMover(pos) && qteMovimentos == 0 && !existeInimigo(pos)) {
                     mat[pos.linha, pos.coluna] = true;
                 }
 
@@ -68,12 +68,12 @@ namespace xadrez {
 
             } else {
                 pos.definirValores(posicao.linha + 1, posicao.coluna);
-                if (tab.posicaoValida(pos) && podeMover(pos)) {
+                if (tab.posicaoValida(pos) && podeMover(pos) && !existeInimigo(pos)) {
                     mat[pos.linha, pos.coluna] = true;
                 }
                 
                 pos.definirValores(posicao.linha + 2, posicao.coluna);
-                if (tab.posicaoValida(pos) && podeMover(pos) && qteMovimentos == 0) {
+                if (tab.posicaoValida(pos) && podeMover(pos) && qteMovimentos == 0 && !existeInimigo(pos)) {
                     mat[pos.linha, pos.coluna] = true;
                 }
 
