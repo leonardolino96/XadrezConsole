@@ -102,10 +102,14 @@ namespace XadrezConsole {
 
         //Lê a coordenada da jogada
         public static PosicaoXadrez lerPosicaoXadrez() {
-            string s = Console.ReadLine();
-            char coluna = s[0];
-            int linha = int.Parse(s[1] + "");
-            return new PosicaoXadrez(coluna, linha);
+            try {
+                string s = Console.ReadLine();
+                char coluna = s[0];
+                int linha = int.Parse(s[1] + "");
+                return new PosicaoXadrez(coluna, linha);
+            } catch (Exception){
+                throw new TabuleiroException("Nenhuma posição informada");
+            }
         }
     }
 }
