@@ -107,7 +107,7 @@ namespace XadrezConsole {
                 char coluna = s[0];
                 int linha = int.Parse(s[1] + "");
                 return new PosicaoXadrez(coluna, linha);
-            } catch (Exception){
+            } catch {
                 throw new TabuleiroException("Nenhuma posição informada");
             }
         }

@@ -21,7 +21,12 @@ namespace tabuleiro {
 
         //Retorna a peça da posição informada
         public Peca peca(Posicao pos) {
-            return pecas[pos.linha, pos.coluna];
+            try {
+                return pecas[pos.linha, pos.coluna];
+            } catch {
+                throw new TabuleiroException("Posição inválida");
+            }
+            
         }
 
         //Coloca a peça na posição informada
